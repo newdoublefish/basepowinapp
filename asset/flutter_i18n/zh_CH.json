@@ -1,0 +1,22 @@
+{
+  "app_name":"自动测试系统",
+  "copyright":"CopyRight 2019 demonstration",
+  "username": "用户名",
+  "password": "密码",
+  "empty_error": "不能为空",
+  "remember": "记住",
+  "login": "登入",
+  "success": "成功",
+  "fail": "失败",
+  "sure": "确定",
+  "first_page":"首页",
+  "knowledge": "知识库",
+  "work": "工作",
+  "me": "我的",
+  "company":"公司",
+  "department":"部门",
+  "position":"岗位",
+  "tel":"电话",
+  "lang":"语言",
+  "version": "版本"
+}

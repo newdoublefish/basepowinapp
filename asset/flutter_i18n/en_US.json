@@ -1,0 +1,22 @@
+{
+  "app_name":"Auto Test System",
+  "copyright":"CopyRight 2019 demonstration",
+  "username": "username",
+  "password": "password",
+  "empty_error": "can not be empty",
+  "remember": "remember",
+  "login": "login",
+  "success": "success",
+  "fail": "fail",
+  "sure": "sure",
+  "first_page":"home",
+  "knowledge": "knowledge",
+  "work": "work",
+  "me": "me",
+  "company":"company",
+  "department":"department",
+  "position":"position",
+  "tel":"tel",
+  "lang":"lang",
+  "version": "version"
+}
