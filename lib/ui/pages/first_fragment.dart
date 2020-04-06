@@ -1,18 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:manufacture/ui/pages/brand_manage_page.dart';
-import 'package:manufacture/ui/pages/product_manager_page.dart';
 import 'package:manufacture/ui/pages/search_page.dart';
 import 'package:manufacture/ui/pages/search_result_page.dart';
-import 'package:manufacture/ui/pages/ship_order_manager_page.dart';
 import 'package:manufacture/ui/pages/short_cut_page.dart';
-import 'package:manufacture/ui/pages/tech_manage_page.dart';
-import 'package:manufacture/ui/pages/trade_manage_page.dart';
-import 'package:manufacture/ui/pages/work_fragment.dart';
 import 'package:manufacture/data/repository/user_repository.dart';
 import 'user_manager_page.dart';
-import 'flow_modal_manager.dart';
-import 'organization_manager_page.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class IconItem extends StatelessWidget {
   final Icon icon;
@@ -234,149 +225,6 @@ class ToolState extends State<Tool> {
               ),
             ],
           ),
-          Builder(builder: (context) {
-            if (widget.userRepository.user.is_admin == true ||
-                widget.userRepository.user.is_superuser == true) {
-              return Category(
-                name: '管理工具',
-                items: <Item>[
-                  //Item(name: '发货单管理',image: 'images/tool1.png',route: 'hello', widget: ShipsManager(title: "发货单管理",),),
-                  Item(
-                    name: '用户管理',
-                    iconWidget: IconItem(
-                      icon: Icon(
-                        Icons.account_circle,
-                        color: Colors.white,
-                      ),
-                      backgroundColor: Colors.orangeAccent,
-                    ),
-                    widget: UserManager(
-                        //userRepository: widget.userRepository,
-                        ),
-                  ),
-                  Item(
-                    name: '项目管理',
-                    iconWidget: IconItem(
-                      icon: Icon(
-                        FontAwesomeIcons.sitemap,
-                        color: Colors.white,
-                      ),
-                      backgroundColor: Colors.blueAccent,
-                    ),
-                    widget: WorkPage(
-                      userRepository: widget.userRepository,
-                      canEdit: true,
-                    ),
-                  ),
-                  Item(
-                    name: '流程管理',
-                    iconWidget: IconItem(
-                      icon: Icon(
-                        FontAwesomeIcons.projectDiagram,
-                        color: Colors.white,
-                      ),
-                      backgroundColor: Colors.blueAccent,
-                    ),
-                    widget: FlowModeManager(),
-                  ),
-                  Item(
-                      name: '组织管理',
-                      iconWidget: IconItem(
-                        icon: Icon(
-                          FontAwesomeIcons.layerGroup,
-                          color: Colors.white,
-                        ),
-                        backgroundColor: Colors.orangeAccent,
-                      ),
-                      widget: OrganizationManager()),
-                ],
-              );
-            } else {
-              return Container();
-            }
-          }),
-          Builder(builder: (context) {
-            if (widget.userRepository.user.is_admin == true ||
-                widget.userRepository.user.is_superuser == true) {
-              return Category(
-                name: '产品信息',
-                items: <Item>[
-                  Item(
-                    name: '品牌管理',
-                    iconWidget: IconItem(
-                      icon: Icon(
-                        Icons.style,
-                        color: Colors.white,
-                      ),
-                      backgroundColor: Colors.deepOrange,
-                    ),
-                    widget: BrandManage(),
-                  ),
-                  //Item(name: '发货单管理',image: 'images/tool1.png',route: 'hello', widget: ShipsManager(title: "发货单管理",),),
-                  Item(
-                    name: '产品类型',
-                    iconWidget: IconItem(
-                      icon: Icon(
-                        FontAwesomeIcons.tag,
-                        color: Colors.white,
-                      ),
-                      backgroundColor: Colors.redAccent,
-                    ),
-                    widget: TradeManage(
-                        //userRepository: widget.userRepository,
-                        ),
-                  ),
-                  Item(
-                    name: '产品管理',
-                    iconWidget: IconItem(
-                      icon: Icon(
-                        FontAwesomeIcons.productHunt,
-                        color: Colors.white,
-                      ),
-                      backgroundColor: Colors.redAccent,
-                    ),
-                    widget: ProductManagePage(),
-                  ),
-                  Item(
-                    name: '二维码管理',
-                    iconWidget: IconItem(
-                        icon: Icon(
-                      FontAwesomeIcons.qrcode,
-                      color: Colors.white,
-                    )),
-                    widget: TechManagePage(),
-                  ),
-                ],
-              );
-            } else {
-              return Container();
-            }
-          }),
-          Builder(builder: (context) {
-            if (widget.userRepository.user.is_admin == true ||
-                widget.userRepository.user.is_superuser == true) {
-              return Category(
-                name: "发货信息",
-                items: <Item>[
-                  Item(
-                    name: '发货信息',
-                    iconWidget: IconItem(
-                      icon: Icon(
-                        Icons.assignment,
-                        color: Colors.white,
-                      ),
-                      backgroundColor: Colors.blueAccent,
-                    ),
-                    widget: ShipOrderManage(
-                        //userRepository: widget.userRepository,
-                        ),
-                  ),
-                ],
-              );
-            } else {
-              return Container();
-            }
-          }),
         ],
       ),
     );

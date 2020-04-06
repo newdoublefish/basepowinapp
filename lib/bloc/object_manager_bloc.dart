@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:manufacture/beans/req_response.dart';
-import 'package:manufacture/ui/pages/flow_detail_page.dart';
 import 'package:meta/meta.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';

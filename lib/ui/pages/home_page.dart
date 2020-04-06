@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:manufacture/ui/pages/task_manage_page.dart';
 import 'home_fragment_base.dart';
 import 'mine_fragment.dart';
 import 'first_fragment.dart';
-import 'knowledge_page.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:manufacture/data/repository/user_repository.dart';
 import 'package:manufacture/data/repository/version_repository.dart';
-import 'work_fragment.dart';
 
 class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   List<BasePage> _baseList;

@@ -1,115 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:manufacture/beans/user_bean.dart';
-import 'package:manufacture/beans/organization.dart';
-import 'package:manufacture/data/repository/position_repository.dart';
-import 'package:manufacture/data/repository/unit_repository.dart';
-import 'package:manufacture/data/repository/user_repository.dart';
-import 'package:manufacture/data/repository/organization_repository.dart';
 import 'package:manufacture/beans/base_bean.dart';
 import '../../core/object_add_edit_page.dart';
 import 'package:manufacture/data/repository/object_repository.dart';
 import '../../core/object_select_widget.dart';
-
-class _OrganizationPositionSelect extends StatefulWidget {
-  final OrganizationObjectRepository organizationObjectRepository;
-  final ObjectSelectController<Organization> organizationSelectController;
-  final PositionObjectRepository positionObjectRepository;
-  final ObjectSelectController<Position> positionSelectController;
-  final UnitObjectRepository unitObjectRepository;
-  final ObjectSelectController<Unit> unitSelectController;
-
-  _OrganizationPositionSelect(
-      {Key key,
-      this.unitObjectRepository,
-      this.unitSelectController,
-      this.organizationSelectController,
-      this.organizationObjectRepository,
-      this.positionSelectController,
-      this.positionObjectRepository})
-      : super(key: key);
-
-  @override
-  State<StatefulWidget> createState() => _OrganizationPositionSelectState();
-}
-
-class _OrganizationPositionSelectState
-    extends State<_OrganizationPositionSelect> {
-
-  Map<String, dynamic> _unitQueryParams={};
-  Map<String, dynamic> _positionQueryParams={};
-  GlobalKey<ObjectSelectPageState> _unitKey =
-  new GlobalKey<ObjectSelectPageState>();
-  GlobalKey<ObjectSelectPageState> _positionKey =
-  new GlobalKey<ObjectSelectPageState>();
-
-  @override
-  void initState() {
-    if(widget.organizationSelectController.selectObject!=null)
-      _unitQueryParams['organization'] = widget.organizationSelectController.selectObject.id;
-    if(widget.positionSelectController.selectObject!=null)
-      _positionQueryParams['unit'] = widget.unitSelectController.selectObject.id;
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        ListTile(
-          leading: Text("组织"),
-          dense: true,
-          title: ObjectSelect<Organization>(
-            controller: widget.organizationSelectController,
-            objectRepository: widget.organizationObjectRepository,
-            onItemShowName: (BaseBean value) {
-              return (value as Organization).name;
-            },
-            onSelectCallBack: (BaseBean value){
-              _unitQueryParams.clear();
-              _unitQueryParams['organization'] = (value as Organization).id;
-              _unitKey.currentState.reload(_unitQueryParams);
-            },
-          ),
-        ),
-        ListTile(
-          leading: Text("部门"),
-          dense: true,
-          title: ObjectSelect<Unit>(
-            key: _unitKey,
-            controller: widget.unitSelectController,
-            initQueryParams: _unitQueryParams,
-            objectRepository: widget.unitObjectRepository,
-            onItemShowName: (BaseBean value) {
-              return (value as Unit).name;
-            },
-            onSelectCallBack: (BaseBean value){
-              _positionQueryParams.clear();
-              _positionQueryParams['unit'] = (value as Unit).id;
-              _positionKey.currentState.reload(_positionQueryParams);
-            },
-          ),
-        ),
-        ListTile(
-          leading: Text("岗位"),
-          dense: true,
-          title: ObjectSelect<Position>(
-            key: _positionKey,
-            controller: widget.positionSelectController,
-            initQueryParams: _positionQueryParams,
-            objectRepository: widget.positionObjectRepository,
-            onItemShowName: (BaseBean value) {
-              return (value as Position).name;
-            },
-          ),
-        ),
-      ],
-    );
-  }
-}
 
 class UserAddEditPage extends StatefulWidget {
   final UserBean object;
@@ -131,22 +25,9 @@ class _OrganizationAddEditPageState extends State<UserAddEditPage> {
   bool is_staff = false;
   bool is_active = false;
   bool is_admin = false;
-  ObjectSelectController<Position> _positionSelectController =
-      new ObjectSelectController<Position>();
-  PositionObjectRepository _positionObjectRepository;
-  int organization;
-  ObjectSelectController<Organization> _organizationSelectController =
-      new ObjectSelectController<Organization>();
-  OrganizationObjectRepository _organizationObjectRepository;
-  ObjectSelectController<Unit> _unitSelectController =
-      new ObjectSelectController<Unit>();
-  UnitObjectRepository _unitObjectRepository;
 
   @override
   void initState() {
-    _positionObjectRepository = PositionObjectRepository.init();
-    _organizationObjectRepository = OrganizationObjectRepository.init();
-    _unitObjectRepository = UnitObjectRepository.init();
     if (widget.object != null) {
       print(widget.object);
       _userNameController.text = widget.object.username;
@@ -159,12 +40,6 @@ class _OrganizationAddEditPageState extends State<UserAddEditPage> {
       is_active = widget.object.is_active;
       is_staff = widget.object.is_staff;
       is_superuser = widget.object.is_superuser;
-      _positionSelectController.selectObject = Position()
-        ..id = widget.object.position;
-      _organizationSelectController.selectObject = Organization()
-        ..id = widget.object.organ;
-      _unitSelectController.selectObject = Unit()..id = widget.object.unit;
-
     }
     super.initState();
   }
@@ -186,9 +61,6 @@ class _OrganizationAddEditPageState extends State<UserAddEditPage> {
           widget.object.is_active = is_active;
           widget.object.is_staff = is_staff;
           widget.object.is_admin = is_admin;
-          widget.object.position = _positionSelectController.selectObject.id;
-          widget.object.organ = _organizationSelectController.selectObject.id;
-          widget.object.unit = _unitSelectController.selectObject.id;
           return widget.object;
         } else {
           UserBean object = new UserBean();
@@ -202,9 +74,6 @@ class _OrganizationAddEditPageState extends State<UserAddEditPage> {
           object.is_active = is_active;
           object.is_staff = is_staff;
           object.is_superuser = is_superuser;
-          object.position = _positionSelectController.selectObject.id;
-          object.organ = _organizationSelectController.selectObject.id;
-          object.unit = _unitSelectController.selectObject.id;
           return object;
         }
       },
@@ -419,25 +288,6 @@ class _OrganizationAddEditPageState extends State<UserAddEditPage> {
             ),
             SizedBox(
               height: 24,
-            ),
-//            ListTile(
-//              leading: Text("岗位"),
-//              dense: true,
-//              title: ObjectSelect<Position>(
-//                controller: _positionSelectController,
-//                objectRepository: _positionObjectRepository,
-//                onItemShowName: (BaseBean value) {
-//                  return (value as Position).name;
-//                },
-//              ),
-//            ),
-            _OrganizationPositionSelect(
-              organizationObjectRepository: _organizationObjectRepository,
-              organizationSelectController: _organizationSelectController,
-              positionObjectRepository: _positionObjectRepository,
-              positionSelectController: _positionSelectController,
-              unitObjectRepository: _unitObjectRepository,
-              unitSelectController: _unitSelectController,
             ),
           ],
         );

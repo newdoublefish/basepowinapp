@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:manufacture/beans/base_bean.dart';
-import 'package:manufacture/bloc/flow_history_detail_bloc.dart';
 import 'package:manufacture/data/repository/object_repository.dart';
 
 import 'object_manager_page.dart';

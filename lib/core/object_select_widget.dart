@@ -4,7 +4,6 @@ import 'package:manufacture/bloc/object_select_bloc.dart';
 import 'package:manufacture/beans/base_bean.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:manufacture/data/repository/object_repository.dart';
-import 'package:manufacture/beans/project.dart';
 
 typedef OnObjectShow<T> = String Function(T value);
 typedef OnSelectCallBack<T>=void Function(T value);

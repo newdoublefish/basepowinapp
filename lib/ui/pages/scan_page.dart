@@ -3,8 +3,6 @@ import 'dart:async';
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'flow_detail_page.dart';
-import 'flow_process_page.dart';
 
 typedef ScanCallback = void Function(BuildContext context, String result);
 class Scan extends StatefulWidget {
