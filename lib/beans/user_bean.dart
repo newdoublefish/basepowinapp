@@ -7,21 +7,18 @@ part 'user_bean.g.dart';
 @JsonSerializable(nullable: false)
 class UserBean extends BaseBean{
   String username;
+  String name;
+  String mobile;
+  String password;
   String first_name;
   String last_name;
-  String email;
-  String password;
   bool is_superuser;
   bool is_staff;
   bool is_active;
-  bool is_admin;
-  String mobile;
-  int position;
-  String position_text;
-  int organ;
-  String organ_text;
-  int unit;
-  String unit_text;
+  int dept;
+  String dept_name;
+  int role;
+  String role_name;
 
   UserBean();
 
@@ -31,7 +28,7 @@ class UserBean extends BaseBean{
   @override
   String toString() {
     // TODO: implement toString
-    return "UserBean : {id:$id, organ:$organ, unit:$unit, postion:$position,$organ_text,$unit_text,$position_text}";
+    return "UserBean : {id:$id, role_name:$role_name, dept_name:$dept_name,dept:$dept}";
   }
 
 }

@@ -53,9 +53,8 @@ class _UserManagerState extends State<UserManager>{
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              (obj as UserBean).position_text!=null?Text((obj as UserBean).position_text):Container(),
-              (obj as UserBean).unit_text!=null?Text((obj as UserBean).unit_text):Container(),
-              (obj as UserBean).organ_text!=null?Text((obj as UserBean).organ_text):Container(),
+              (obj as UserBean).dept_name!=null?Text((obj as UserBean).dept_name):Container(),
+              (obj as UserBean).role_name!=null?Text((obj as UserBean).role_name):Container(),
             ],
           ),
           trailing: Text((obj as UserBean).is_active?"已激活":"未激活",style: TextStyle(color: (obj as UserBean).is_active?Colors.green:Colors.red),),

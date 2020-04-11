@@ -1,11 +1,13 @@
 class ImmpApi{
-  //static const String baseUrl = "http://192.168.10.107:8000";
-  static const String baseUrl = "http://47.107.182.100:9000";
+  static const String baseUrl = "http://192.168.10.107:8000";
+  //static const String baseUrl = "http://47.107.182.100:9000";
   //static const String baseUrl = "http://172.29.136.2:8000";
   //static const String baseUrl = "http://disk.tcce.pro:9000";
   static const String loginPath = "/api/user/login/";
   static const String projectPath = "/api/flow/project/";
   static const String productPath = "/api/product/";
+  static const String departmentPath = "/api/department/";
+  static const String rolePath = "/api/role/";
   static const String errorPath = "/api/fault/query";
   static const String userInfoPath = "/api/user/";
   static const String flowHistoryPath = "/api/flow/instance/";
