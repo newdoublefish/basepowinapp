@@ -169,18 +169,10 @@ class MinePageState extends State<MinePage> with AutomaticKeepAliveClientMixin {
                   _appBarBehavior == AppBarBehavior.snapping,
               snap: _appBarBehavior == AppBarBehavior.snapping,
               flexibleSpace: FlexibleSpaceBar(
-                title: Text(widget.userRepository.user.name),
+                title: widget.userRepository.user.name.length !=0? Text(widget.userRepository.user.name):Text(widget.userRepository.user.username),
                 background: Stack(
                   fit: StackFit.expand,
                   children: <Widget>[
-//                    Image.asset(
-//                      'images/lake.jpg',
-//                      fit: BoxFit.cover,
-//                      height: _appBarHeight,
-//                    ),
-//                    CircleAvatar(
-//                      backgroundImage: AssetImage('images/lake.jpg'),
-//                    ),
                     Container(
                         alignment: Alignment.center,
                         color: Theme.of(context).accentColor,
@@ -213,17 +205,17 @@ class MinePageState extends State<MinePage> with AutomaticKeepAliveClientMixin {
                   children: <Widget>[
                     _CategoryItem(
                       title: FlutterI18n.translate(context, "position"),
-                      value: widget.userRepository.user.role,
+                      value: widget.userRepository.user.role!=null?widget.userRepository.user.role:"",
                       icon: Icon(Icons.work, color: Theme.of(context).accentColor,),
                     ),
                     _CategoryItem(
                       title: FlutterI18n.translate(context, "department"),
-                      value: widget.userRepository.user.department,
+                      value: widget.userRepository.user.department!=null?widget.userRepository.user.department:"",
                       icon: Icon(Icons.games, color: Theme.of(context).accentColor,),
                     ),
                     _CategoryItem(
                       title: FlutterI18n.translate(context, "tel"),
-                      value: widget.userRepository.user.mobile,
+                      value: widget.userRepository.user.mobile!=null?widget.userRepository.user.mobile:"",
                       icon: Icon(Icons.phone,color: Theme.of(context).accentColor,),
                     ),
                     //_CategoryItem(title: '创建时间',value: user.createAt, icon: Icon(Icons.timeline),),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:manufacture/ui/pages/mop_manage_page.dart';
 import 'home_fragment_base.dart';
 import 'mine_fragment.dart';
 import 'first_fragment.dart';
@@ -21,7 +22,6 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
     });
   }
 
-
   @override
   void initState() {
     super.initState();
@@ -40,18 +40,18 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
       context: context,
       builder: (context) =>
           new AlertDialog(content: new Text('退出app'), actions: <Widget>[
-            new FlatButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  if (Navigator.canPop(context)) {
-                    Navigator.pop(context);
-                  } else {
-                    //SystemNavigator.pop();
-                    SystemNavigator.pop();
-                  }
-                },
-                child: new Text('确定'))
-          ]),
+        new FlatButton(
+            onPressed: () {
+              Navigator.pop(context);
+              if (Navigator.canPop(context)) {
+                Navigator.pop(context);
+              } else {
+                //SystemNavigator.pop();
+                SystemNavigator.pop();
+              }
+            },
+            child: new Text('确定'))
+      ]),
     );
   }
 
@@ -68,21 +68,27 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
         title: FlutterI18n.translate(context, "first_page"),
         color: Colors.deepPurple,
         vsync: this,
-        naviPage: HomeMain(userRepository: widget.userRepository,),
+        naviPage: HomeMain(
+          userRepository: widget.userRepository,
+        ),
       ),
       BasePage(
         icon: const Icon(Icons.dashboard),
         title: FlutterI18n.translate(context, "work"),
         color: Colors.deepPurple,
         vsync: this,
-        naviPage: Center(child: Text("hello world"),),
+        //naviPage: Center(child: Text("hello world"),),
+        naviPage: MopManager(),
       ),
       BasePage(
         icon: const Icon(Icons.account_circle),
         title: FlutterI18n.translate(context, "me"),
         color: Colors.deepPurple,
         vsync: this,
-        naviPage: MinePage(userRepository:widget.userRepository, versionRepository: widget.versionRepository,),
+        naviPage: MinePage(
+          userRepository: widget.userRepository,
+          versionRepository: widget.versionRepository,
+        ),
       ),
     ];
     // TODO: implement build
@@ -120,7 +126,11 @@ class HomePage extends StatefulWidget {
   final UserRepository userRepository;
   final VersionRepository versionRepository;
 
-  HomePage({Key key,@required this.userRepository, @required this.versionRepository}):super(key:key);
+  HomePage(
+      {Key key,
+      @required this.userRepository,
+      @required this.versionRepository})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
