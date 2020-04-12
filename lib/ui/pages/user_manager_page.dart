@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:manufacture/beans/base_bean.dart';
+import 'package:manufacture/beans/department.dart';
 import 'package:manufacture/beans/user_bean.dart';
+import 'package:manufacture/core/object_filter_page.dart';
+import 'package:manufacture/data/repository/department_repository.dart';
 import 'package:manufacture/data/repository/user_repository.dart';
 import 'package:manufacture/ui/widget/smart_filter_page/smart_filter_page.dart';
 import '../../core/object_manager_page.dart';
@@ -16,15 +19,29 @@ class UserManager extends StatefulWidget{
 
 class _UserManagerState extends State<UserManager>{
   UserObjectRepository _objectRepository;
+  DepartmentRepository _departmentRepository;
   @override
   void initState() {
     _objectRepository = UserObjectRepository.init();
+    _departmentRepository = DepartmentRepository.init();
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
     return ObjectManagerPage<UserBean>(
       filterGroupList: [
+        FilterGroup(
+            niceName: "部门",filterName: "dept",
+            builder: (context, func){
+              return ObjectFilterPage<Department>(
+                objectRepository: _departmentRepository,
+                filterItemChange: func,
+                onItemNiceName: (BaseBean result){
+                  return (result as Department).name;
+                },
+              );
+            }
+        ),
         FilterGroup(
           niceName: "状态",filterName: "is_active",
           filterItems: [

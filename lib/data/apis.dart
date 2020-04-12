@@ -7,6 +7,8 @@ class ImmpApi{
   static const String projectPath = "/api/flow/project/";
   static const String productPath = "/api/product/";
   static const String departmentPath = "/api/department/";
+  static const String mopPath = "/api/mop/";
+  static const String procedurePath = "/api/procedure/";
   static const String rolePath = "/api/role/";
   static const String errorPath = "/api/fault/query";
   static const String userInfoPath = "/api/user/";
