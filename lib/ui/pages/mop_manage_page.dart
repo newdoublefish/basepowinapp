@@ -7,6 +7,7 @@ import 'package:manufacture/core/object_filter_page.dart';
 import 'package:manufacture/data/repository/department_repository.dart';
 import 'package:manufacture/data/repository/mop_repository.dart';
 import 'package:manufacture/data/repository/user_repository.dart';
+import 'package:manufacture/ui/pages/procedure_manager_page.dart';
 import 'package:manufacture/ui/widget/smart_filter_page/smart_filter_page.dart';
 import '../../core/object_manager_page.dart';
 import 'user_add_edit_page.dart';
@@ -64,7 +65,9 @@ class _MopManagerState extends State<MopManager>{
         return widget;
       },
       onTap: (BaseBean value){
-        print(value as UserBean);
+        Navigator.push(context, MaterialPageRoute(builder: (context){
+          return ProcedureManager(mop: value as Mop,);
+        }));
       },
 //      addEditPageBuilder: (context, BaseBean obj){
 //        return UserAddEditPage(
