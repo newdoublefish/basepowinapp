@@ -12,9 +12,9 @@ Mop _$MopFromJson(Map<String, dynamic> json) {
     ..sell_order_name = json['sell_order_name'] as String
     ..sell_order = json['sell_order'] as int
     ..manufacture_order_name = json['manufacture_order_name'] as String
-    ..manufacture_order = json['manufacture_order'] as String
+    ..manufacture_order = json['manufacture_order'] as int
     ..part_no_name = json['part_no_name'] as String
-    ..part_no = json['part_no'] as String
+    ..part_no = json['part_no'] as int
     ..quantity = json['quantity'] as int
     ..status = json['status'] as int
     ..status_name = json['status_name'] as String

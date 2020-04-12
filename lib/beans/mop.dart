@@ -7,9 +7,9 @@ class Mop extends BaseBean{
   String sell_order_name;
   int sell_order;
   String manufacture_order_name;
-  String manufacture_order;
+  int manufacture_order;
   String part_no_name;
-  String part_no;
+  int part_no;
   int quantity;
   int status;
   String status_name;
