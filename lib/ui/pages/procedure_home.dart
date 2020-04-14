@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:manufacture/ui/pages/task_manage_page.dart';
 
 class ProcedureHomePage extends StatefulWidget {
   @override
@@ -8,7 +9,7 @@ class ProcedureHomePage extends StatefulWidget {
 class _ProcedureHomePageState extends State<ProcedureHomePage> {
   int _currentIndex = 0;
   final List<Widget> _children = [
-    Center(child: Icon(Icons.access_alarm),),
+    Center(child: TaskMangePage(),),
     Center(child: Icon(Icons.access_alarm),),
     Center(child: Icon(Icons.access_alarm),),
   ];
