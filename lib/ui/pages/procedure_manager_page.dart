@@ -8,6 +8,7 @@ import 'package:manufacture/data/repository/department_repository.dart';
 import 'package:manufacture/data/repository/mop_repository.dart';
 import 'package:manufacture/data/repository/procedure_repository.dart';
 import 'package:manufacture/data/repository/user_repository.dart';
+import 'package:manufacture/ui/pages/procedure_home.dart';
 import 'package:manufacture/ui/widget/railway/railway.dart';
 import 'package:manufacture/ui/widget/smart_filter_page/smart_filter_page.dart';
 import '../../core/object_manager_page.dart';
@@ -67,10 +68,17 @@ class _ProcedureManagerState extends State<ProcedureManager> {
                 print(list);
                 return RailWay(
                   physics: NeverScrollableScrollPhysics(),
+
                   stations: list.map((node) {
                     print(node);
                     Procedure _procedure = node as Procedure;
                     return Station(
+                        onTap: (){
+                          print("--------onTap-------");
+                          Navigator.push(context, MaterialPageRoute(builder: (context){
+                            return ProcedureHomePage();
+                          }));
+                        },
                         title: _procedure.name,
                         content: Column(
                           children: <Widget>[
