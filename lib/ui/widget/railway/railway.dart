@@ -7,7 +7,8 @@ const Color _kCircleActiveDark = Colors.black87;
 const Color _kDisabledLight = Colors.black38;
 const Color _kDisabledDark = Colors.white38;
 const double _kStepSize = 24.0;
-const double _kTriangleHeight = _kStepSize * 0.866025; // Triangle height. sqrt(3.0) / 2.0
+const double _kTriangleHeight =
+    _kStepSize * 0.866025; // Triangle height. sqrt(3.0) / 2.0
 
 class Station {
   final String title;
@@ -16,7 +17,14 @@ class Station {
   final Icon customIcon;
   final IndexedWidgetBuilder actionBuilder;
   final GestureTapCallback onTap;
-  Station({this.title,this.content,this.color,this.customIcon,this.actionBuilder,this.onTap});
+
+  Station(
+      {this.title,
+      this.content,
+      this.color,
+      this.customIcon,
+      this.actionBuilder,
+      this.onTap});
 
   @override
   String toString() {
@@ -28,7 +36,14 @@ class RailWay extends StatefulWidget {
   final List<Station> stations;
   final IndexedWidgetBuilder actionBuilder;
   final ScrollPhysics physics;
-  RailWay({Key key, this.stations, this.actionBuilder,this.physics = const AlwaysScrollableScrollPhysics()}) : super(key: key);
+
+  RailWay(
+      {Key key,
+      this.stations,
+      this.actionBuilder,
+      this.physics = const AlwaysScrollableScrollPhysics()})
+      : super(key: key);
+
   @override
   State<StatefulWidget> createState() => _RailWay();
 }
@@ -47,21 +62,25 @@ class _RailWay extends State<RailWay> {
       margin: const EdgeInsets.symmetric(vertical: 8.0),
       width: _kStepSize,
       height: _kStepSize,
-      child: widget.stations[index].customIcon!=null?widget.stations[index].customIcon:AnimatedContainer(
-        curve: Curves.fastOutSlowIn,
-        duration: kThemeAnimationDuration,
-        decoration: BoxDecoration(
-          //color: Theme.of(context).accentColor,
-          color: widget.stations[index].color!=null?widget.stations[index].color:Theme.of(context).accentColor,
-          shape: BoxShape.circle,
-        ),
-        child: Center(
-          child: Text(
-          '${index + 1}',
-            style: TextStyle(color: Colors.white),
-        ),
-        ),
-      ),
+      child: widget.stations[index].customIcon != null
+          ? widget.stations[index].customIcon
+          : AnimatedContainer(
+              curve: Curves.fastOutSlowIn,
+              duration: kThemeAnimationDuration,
+              decoration: BoxDecoration(
+                //color: Theme.of(context).accentColor,
+                color: widget.stations[index].color != null
+                    ? widget.stations[index].color
+                    : Theme.of(context).accentColor,
+                shape: BoxShape.circle,
+              ),
+              child: Center(
+                child: Text(
+                  '${index + 1}',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
     );
   }
 
@@ -108,7 +127,11 @@ class _RailWay extends State<RailWay> {
             child: Container(
               alignment: Alignment.bottomRight,
               //child: widget.actionBuilder!=null?widget.actionBuilder(context,index):Container(),
-              child: widget.stations[index].actionBuilder!=null?widget.stations[index].actionBuilder(context,index):widget.actionBuilder!=null?widget.actionBuilder(context,index):Container(),
+              child: widget.stations[index].actionBuilder != null
+                  ? widget.stations[index].actionBuilder(context, index)
+                  : widget.actionBuilder != null
+                      ? widget.actionBuilder(context, index)
+                      : Container(),
               //child: widget.stations.!=null?widget.extraAction:Container(),
             ),
           )
@@ -142,7 +165,9 @@ class _RailWay extends State<RailWay> {
 //            end: 24.0,
 //            bottom: 24.0,
           ),
-          child: widget.stations[index].content,
+          child: GestureDetector(
+              onTap: widget.stations[index].onTap,
+              child: widget.stations[index].content),
 //          child: Column(
 //            mainAxisAlignment: MainAxisAlignment.start,
 //            crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -168,14 +193,14 @@ class _RailWay extends State<RailWay> {
       ));
     }
 
-      print(children.length);
+    print(children.length);
 
-      return ListView(
-        shrinkWrap: true,
-        //physics: NeverScrollableScrollPhysics(),
-        physics: widget.physics,
-        children: children,
-      );
+    return ListView(
+      shrinkWrap: true,
+      //physics: NeverScrollableScrollPhysics(),
+      physics: widget.physics,
+      children: children,
+    );
   }
 
   @override
