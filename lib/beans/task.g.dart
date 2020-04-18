@@ -15,7 +15,7 @@ Task _$TaskFromJson(Map<String, dynamic> json) {
     ..procedure_name = json['procedure_name'] as String
     ..plan_quantity = json['plan_quantity'] as int
     ..quantity = json['quantity'] as int
-    ..weight = json['weight'] as int
+    ..weight = (json['weight'] as num).toDouble()
     ..created_at = json['created_at'] as String
     ..started_at = json['started_at'] as String
     ..stopped_at = json['stopped_at'] as String

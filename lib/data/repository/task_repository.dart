@@ -18,11 +18,13 @@ class TaskRepository extends ObjectRepository<Task> {
   factory TaskRepository.init() {
     if (_objectRepository == null) {
       _objectRepository = TaskRepository(
-        url: ImmpApi.getApiPath(ImmpApi.rolePath),
+        url: ImmpApi.getApiPath(ImmpApi.taskPath),
         objectFromJsonFunc: (value) {
+          print("---1");
           return Task.fromJson(value);
         },
         objectToJsonFunc: (value) {
+          print("---2");
           return value.toJson();
         },
       );
