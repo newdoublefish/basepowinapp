@@ -7,6 +7,7 @@ import 'package:manufacture/core/object_manager_page.dart';
 import 'package:manufacture/data/repository/task_repository.dart';
 import 'package:manufacture/ui/widget/smart_filter_page/smart_filter_page.dart';
 
+import 'task_add_edit_page.dart';
 
 class Tasks extends StatefulWidget {
   @override
@@ -16,9 +17,9 @@ class Tasks extends StatefulWidget {
 class _TasksState extends State<Tasks> {
   TaskRepository _taskRepository;
 
-  getList() async{
+  getList() async {
     _taskRepository.clear();
-    ReqResponse<List<Task>> req =  await _taskRepository.getList();
+    ReqResponse<List<Task>> req = await _taskRepository.getList();
     print(req.t);
   }
 
@@ -35,7 +36,7 @@ class _TasksState extends State<Tasks> {
       customWidgetBuilder: (context, List<BaseBean> list) {
         print(list.length);
         return Column(
-          children: list.map((obj){
+          children: list.map((obj) {
             print("111 ${obj.id}");
             Task _task = obj as Task;
             return Card(
@@ -60,40 +61,55 @@ class _TasksState extends State<Tasks> {
   }
 }
 
-
 class TaskMangePage extends StatefulWidget {
+  final Procedure procedure;
+  TaskMangePage({Key key, this.procedure}):super(key:key);
   @override
   _TaskMangePageState createState() => _TaskMangePageState();
 }
 
 class _TaskMangePageState extends State<TaskMangePage> {
   TaskRepository _objectRepository;
+
   @override
   void initState() {
     _objectRepository = TaskRepository.init();
     super.initState();
   }
+
+  Widget _actionButton(String actionName, Icon icon, VoidCallback callback) {
+    return PopupMenuItem(
+      child: ListTile(
+        leading: icon != null ? Icon(Icons.forward) : icon,
+        title: Text(actionName),
+        onTap: () {
+          callback();
+          Navigator.pop(context);
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return ObjectManagerPage<Task>(
       filterGroupList: [
-        FilterGroup(
-            niceName: "状态",filterName: "status",
-            filterItems: [
-              FilterItem(niceName: "全部",),
-              FilterItem(niceName: "未开始", filterValue: "0"),
-              FilterItem(niceName: "进行中", filterValue: "1"),
-              FilterItem(niceName: "已完成", filterValue: "2"),
-
-            ]
-        ),
+        FilterGroup(niceName: "状态", filterName: "status", filterItems: [
+          FilterItem(
+            niceName: "全部",
+          ),
+          FilterItem(niceName: "未开始", filterValue: "0"),
+          FilterItem(niceName: "进行中", filterValue: "1"),
+          FilterItem(niceName: "已完成", filterValue: "2"),
+        ]),
       ],
       title: "任务管理",
-      //initQueryParams: {"unit": widget.unit.id},
-      objectRepository:_objectRepository,
-      itemWidgetBuilder: (context, BaseBean obj){
+      initQueryParams: {"procedure": widget.procedure.id},
+      objectRepository: _objectRepository,
+      itemWidgetBuilder: (context, BaseBean obj) {
         Task _task = obj as Task;
         Widget widget = Card(
+          color: Colors.greenAccent,
           child: ListTile(
             title: Text(_task.name),
             subtitle: Column(
@@ -106,11 +122,30 @@ class _TaskMangePageState extends State<TaskMangePage> {
                 Text("操作: ${_task.username}"),
               ],
             ),
+            trailing: PopupMenuButton(
+              icon: Icon(Icons.more_vert),
+              itemBuilder: (context) => <PopupMenuItem>[
+                _actionButton("开始", Icon(Icons.forward), () {
+                  print("开始:" + _task.name);
+                }),
+                _actionButton("完成", Icon(Icons.forward), () {
+                  print("完成:" + _task.name);
+                }),
+              ],
+            ),
           ),
         );
         return widget;
       },
-      onTap: (BaseBean value){
+      addEditPageBuilder: (context, BaseBean obj) {
+        return TaskAddEditPage(
+          task: obj as Task,
+          procedure: widget.procedure,
+          objectRepository: _objectRepository,
+        );
+      },
+      canDeleteBatch: false,
+      onTap: (BaseBean value) {
 //        Navigator.push(context, MaterialPageRoute(builder: (context){
 //          return ProcedureManager(mop: value as Mop,);
 //        }));

@@ -76,7 +76,7 @@ class _ProcedureManagerState extends State<ProcedureManager> {
                         onTap: (){
                           print("--------onTap-------");
                           Navigator.push(context, MaterialPageRoute(builder: (context){
-                            return ProcedureHomePage();
+                            return ProcedureHomePage(procedure: _procedure,);
                           }));
                         },
                         title: _procedure.name,

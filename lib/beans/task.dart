@@ -14,6 +14,7 @@ class Task extends BaseBean{
   String created_at;
   String started_at;
   String stopped_at;
+  int user;
   String username;
   String status_text;
   Task();
