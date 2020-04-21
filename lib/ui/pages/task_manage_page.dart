@@ -132,7 +132,6 @@ class _TaskMangePageState extends State<TaskMangePage> {
               icon: Icon(Icons.more_vert),
               itemBuilder: (context) => <PopupMenuItem>[
                 _actionButton("开始", Icon(Icons.forward), () async {
-                  print("开始:" + _task.name);
                   ReqResponse response =
                       await _objectRepository.start(task: _task);
                   if (response.isSuccess) {
@@ -141,8 +140,14 @@ class _TaskMangePageState extends State<TaskMangePage> {
                     SnackBarUtil.fail(context: context, message: response.message);
                   }
                 }),
-                _actionButton("完成", Icon(Icons.forward), () {
-                  print("完成:" + _task.name);
+                _actionButton("完成", Icon(Icons.forward), () async{
+                  ReqResponse response =
+                  await _objectRepository.finish(task: _task);
+                  if (response.isSuccess) {
+                    objectManagerController.requestRefresh();
+                  }else{
+                    SnackBarUtil.fail(context: context, message: response.message);
+                  }
                 }),
               ],
             ),

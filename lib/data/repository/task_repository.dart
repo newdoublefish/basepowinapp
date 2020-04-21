@@ -41,5 +41,12 @@ class TaskRepository extends ObjectRepository<Task> {
     return response;
   }
 
+  Future<ReqResponse> finish(
+      {Task task}) async {
+    ReqResponse response;
+    response = await HttpHelper().get(url:url+"${task.id}/finish/", queryParams:{});
+    return response;
+  }
+
 
 }
