@@ -6,6 +6,7 @@ import 'package:manufacture/beans/task.dart';
 import 'package:manufacture/core/object_manager_page.dart';
 import 'package:manufacture/data/repository/task_repository.dart';
 import 'package:manufacture/ui/widget/smart_filter_page/smart_filter_page.dart';
+import 'package:manufacture/util/snackbar_util.dart';
 
 import 'task_add_edit_page.dart';
 
@@ -63,17 +64,21 @@ class _TasksState extends State<Tasks> {
 
 class TaskMangePage extends StatefulWidget {
   final Procedure procedure;
-  TaskMangePage({Key key, this.procedure}):super(key:key);
+
+  TaskMangePage({Key key, this.procedure}) : super(key: key);
+
   @override
   _TaskMangePageState createState() => _TaskMangePageState();
 }
 
 class _TaskMangePageState extends State<TaskMangePage> {
   TaskRepository _objectRepository;
+  ObjectManagerController objectManagerController;
 
   @override
   void initState() {
     _objectRepository = TaskRepository.init();
+    objectManagerController = ObjectManagerController("refresh");
     super.initState();
   }
 
@@ -103,13 +108,14 @@ class _TaskMangePageState extends State<TaskMangePage> {
           FilterItem(niceName: "已完成", filterValue: "2"),
         ]),
       ],
+      objectManagerController: objectManagerController,
       title: "任务管理",
       initQueryParams: {"procedure": widget.procedure.id},
       objectRepository: _objectRepository,
       itemWidgetBuilder: (context, BaseBean obj) {
         Task _task = obj as Task;
         Widget widget = Card(
-          color: Colors.greenAccent,
+          color: _getTaskColor(_task),
           child: ListTile(
             title: Text(_task.name),
             subtitle: Column(
@@ -125,8 +131,15 @@ class _TaskMangePageState extends State<TaskMangePage> {
             trailing: PopupMenuButton(
               icon: Icon(Icons.more_vert),
               itemBuilder: (context) => <PopupMenuItem>[
-                _actionButton("开始", Icon(Icons.forward), () {
+                _actionButton("开始", Icon(Icons.forward), () async {
                   print("开始:" + _task.name);
+                  ReqResponse response =
+                      await _objectRepository.start(task: _task);
+                  if (response.isSuccess) {
+                    objectManagerController.requestRefresh();
+                  }else{
+                    SnackBarUtil.fail(context: context, message: response.message);
+                  }
                 }),
                 _actionButton("完成", Icon(Icons.forward), () {
                   print("完成:" + _task.name);
@@ -151,6 +164,15 @@ class _TaskMangePageState extends State<TaskMangePage> {
 //        }));
       },
     );
+  }
+
+  Color _getTaskColor(Task task) {
+    if(task.status_text.compareTo("未开始")==0){
+      return Colors.redAccent;
+    }else if(task.status_text.compareTo("进行中")==0){
+      return Colors.yellowAccent;
+    }
+    return Colors.greenAccent;
   }
 }
 

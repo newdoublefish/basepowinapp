@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:manufacture/beans/req_response.dart';
 import 'package:manufacture/beans/task.dart';
 
 import '../apis.dart';
+import '../http.dart';
 import 'object_repository.dart';
 
 class TaskRepository extends ObjectRepository<Task> {
@@ -31,4 +33,13 @@ class TaskRepository extends ObjectRepository<Task> {
     }
     return _objectRepository;
   }
+
+  Future<ReqResponse> start(
+      {Task task}) async {
+    ReqResponse response;
+    response = await HttpHelper().get(url:url+"${task.id}/start/", queryParams:{});
+    return response;
+  }
+
+
 }
