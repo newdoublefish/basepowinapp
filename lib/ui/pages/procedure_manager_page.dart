@@ -12,6 +12,7 @@ import 'package:manufacture/ui/pages/procedure_home.dart';
 import 'package:manufacture/ui/widget/railway/railway.dart';
 import 'package:manufacture/ui/widget/smart_filter_page/smart_filter_page.dart';
 import '../../core/object_manager_page.dart';
+import 'task_manage_page.dart';
 import 'user_add_edit_page.dart';
 import 'password_change_page.dart';
 
@@ -76,7 +77,8 @@ class _ProcedureManagerState extends State<ProcedureManager> {
                         onTap: (){
                           print("--------onTap-------");
                           Navigator.push(context, MaterialPageRoute(builder: (context){
-                            return ProcedureHomePage(procedure: _procedure,);
+                            //return ProcedureHomePage(procedure: _procedure,);
+                            return TaskMangePage(procedure: _procedure);
                           }));
                         },
                         title: _procedure.name,
