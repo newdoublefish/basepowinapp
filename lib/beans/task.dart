@@ -10,10 +10,11 @@ class Task extends BaseBean{
   String procedure_name;
   int plan_quantity;
   int quantity;
-  int weight;
+  double weight;
   String created_at;
   String started_at;
   String stopped_at;
+  int user;
   String username;
   String status_text;
   Task();

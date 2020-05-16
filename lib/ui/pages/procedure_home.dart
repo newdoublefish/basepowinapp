@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:manufacture/beans/procedure.dart';
 import 'package:manufacture/ui/pages/task_manage_page.dart';
 
 class ProcedureHomePage extends StatefulWidget {
+  final Procedure procedure;
+  ProcedureHomePage({Key key, @required this.procedure}):super(key:key);
   @override
   _ProcedureHomePageState createState() => _ProcedureHomePageState();
 }
 
 class _ProcedureHomePageState extends State<ProcedureHomePage> {
   int _currentIndex = 0;
-  final List<Widget> _children = [
-    Center(child: TaskMangePage(),),
-    Center(child: Icon(Icons.access_alarm),),
-    Center(child: Icon(Icons.access_alarm),),
-  ];
+  List<Widget> _children;
 
   final List<BottomNavigationBarItem> _list = <BottomNavigationBarItem>[
     BottomNavigationBarItem(
@@ -28,6 +27,17 @@ class _ProcedureHomePageState extends State<ProcedureHomePage> {
       title: Text('发送单'),
     ),
   ];
+
+  @override
+  void initState() {
+    _children = [
+      Center(child: TaskMangePage(procedure: widget.procedure),),
+      Center(child: Icon(Icons.access_alarm),),
+      Center(child: Icon(Icons.access_alarm),),
+    ];
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold( //构建底部导航，并添加点击事件
