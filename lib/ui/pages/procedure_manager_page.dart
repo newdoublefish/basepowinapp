@@ -28,10 +28,12 @@ class ProcedureManager extends StatefulWidget {
 
 class _ProcedureManagerState extends State<ProcedureManager> {
   ProcedureRepository _objectRepository;
+  ObjectManagerController _objectManagerController;
 
   @override
   void initState() {
     _objectRepository = ProcedureRepository.init();
+    _objectManagerController = ObjectManagerController("refresh");
     super.initState();
   }
 
@@ -43,7 +45,6 @@ class _ProcedureManagerState extends State<ProcedureManager> {
         onTap: () {
           Navigator.pop(context);
           callback();
-
         },
       ),
     );
@@ -55,6 +56,17 @@ class _ProcedureManagerState extends State<ProcedureManager> {
       leading: Text(name),
       title: Text("$cnt"),
     );
+  }
+
+  Future<void> _receive(Procedure procedure, int count) async{
+    bool flag = await _objectRepository.receive(procedure: procedure, quantity: count);
+    if (flag){
+      _objectManagerController.requestRefresh();
+      print("接收成功");
+    }else{
+      print("接收失败");
+    }
+
   }
 
   @override
@@ -70,6 +82,7 @@ class _ProcedureManagerState extends State<ProcedureManager> {
               enablePullUp: false,
               initQueryParams: {"mop": widget.mop.id},
               objectRepository: _objectRepository,
+              objectManagerController: _objectManagerController,
               customWidgetBuilder: (context, List<BaseBean> list) {
                 print(list);
                 return RailWay(
@@ -94,8 +107,9 @@ class _ProcedureManagerState extends State<ProcedureManager> {
                             _procedureNum("发送", _procedure.delivered_quantity),
                           ],
                         ),
-                        actionBuilder: (context, int) {
-                          TextEditingController _countController = new TextEditingController();
+                        actionBuilder: (context, index) {
+                          TextEditingController _countController =
+                              new TextEditingController();
                           return PopupMenuButton(
                             icon: Icon(Icons.more_vert),
                             itemBuilder: (context) => <PopupMenuItem>[
@@ -108,18 +122,21 @@ class _ProcedureManagerState extends State<ProcedureManager> {
                                     builder: (context) => new AlertDialog(
                                           title: new Text('输入接收数量'),
                                           content: Builder(
-                                            builder: (context){
-                                              return TextField (
+                                            builder: (context) {
+                                              return TextField(
                                                 controller: _countController,
-                                                keyboardType: TextInputType.number,
+                                                keyboardType:
+                                                    TextInputType.number,
                                                 inputFormatters: [
-                                                  WhitelistingTextInputFormatter.digitsOnly
+                                                  WhitelistingTextInputFormatter
+                                                      .digitsOnly
                                                 ],
                                                 decoration: InputDecoration(
                                                   filled: true,
                                                   icon: Icon(
                                                     Icons.account_balance,
-                                                    color: Theme.of(context).accentColor,
+                                                    color: Theme.of(context)
+                                                        .accentColor,
                                                   ),
                                                   labelText: '数量',
                                                   //hintText: '编号',
@@ -132,6 +149,7 @@ class _ProcedureManagerState extends State<ProcedureManager> {
                                             new FlatButton(
                                                 onPressed: () {
                                                   Navigator.pop(context);
+                                                  _receive(_procedure, int.parse(_countController.text));
                                                 },
                                                 child: new Text('确定')),
                                             new FlatButton(
