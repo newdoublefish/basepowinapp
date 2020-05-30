@@ -104,7 +104,7 @@ class _ProcedureManagerState extends State<ProcedureManager> {
                           children: <Widget>[
                             _procedureNum("接收", _procedure.received_quantity),
                             _procedureNum("完成", _procedure.quantity),
-                            _procedureNum("发送", _procedure.delivered_quantity),
+                            //_procedureNum("发送", _procedure.delivered_quantity),
                           ],
                         ),
                         actionBuilder: (context, index) {
@@ -113,8 +113,11 @@ class _ProcedureManagerState extends State<ProcedureManager> {
                           return PopupMenuButton(
                             icon: Icon(Icons.more_vert),
                             itemBuilder: (context) => <PopupMenuItem>[
-                              _actionButton("发送", Icon(Icons.forward), () {
-                                print("发送:" + _procedure.name);
+                              _actionButton("开始", Icon(Icons.forward), () {
+                                print("开始:" + _procedure.name);
+                              }),
+                              _actionButton("结束", Icon(Icons.forward), () {
+                                print("结束:" + _procedure.name);
                               }),
                               _actionButton("接收", Icon(Icons.forward), () {
                                 print("接收:" + _procedure.name);
@@ -161,7 +164,7 @@ class _ProcedureManagerState extends State<ProcedureManager> {
                                         ),
                                     context: context);
                               }),
-                              _actionButton("派工", Icon(Icons.forward), () {}),
+                              //_actionButton("派工", Icon(Icons.forward), () {}),
                             ],
                           );
                         });
