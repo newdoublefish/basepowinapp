@@ -1,6 +1,6 @@
 class ImmpApi{
-  static const String baseUrl = "http://192.168.10.107:8000";
-  //static const String baseUrl = "http://47.107.182.100:9000";
+  //static const String baseUrl = "http://192.168.10.100:8000";
+  static const String baseUrl = "http://47.107.182.100:9000";
   //static const String baseUrl = "http://172.29.136.2:8000";
   //static const String baseUrl = "http://disk.tcce.pro:9000";
   static const String loginPath = "/api/user/login/";
