@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:manufacture/beans/procedure.dart';
+import 'package:manufacture/beans/req_response.dart';
 import '../apis.dart';
+import '../http.dart';
 import 'object_repository.dart';
 
 class ProcedureRepository extends ObjectRepository<Procedure> {
@@ -28,5 +30,12 @@ class ProcedureRepository extends ObjectRepository<Procedure> {
       );
     }
     return _objectRepository;
+  }
+
+  Future<bool> receive({Procedure procedure, int quantity}) async{
+    ReqResponse response = await HttpHelper().put(url+"${procedure.id}/receive/", data: {
+      "quantity": quantity
+    });
+    return response.isSuccess;
   }
 }
